@@ -1,3 +1,46 @@
 * {
   box-sizing: border-box;
 }
+
+.wrapper {
+  display: flex;
+}
+
+.side-bar {
+  height: 100vh;
+  width: 300px;
+}
+
+.username-bar {
+  height: 100px;
+  background-color: #253141;
+  padding: 0 20px;
+}
+
+.rooms {
+  background-color: #2f3e51;
+  height: calc(100vh - 100px);
+  padding: 0 20px;
+}
+
+.main-chat {
+  width: calc(100vw - 300px);
+}
+
+.title-bar {
+  height: 100px;
+  background-color: #FFFFFF;
+  padding: 0 40px;
+}
+
+.display-screen {
+  height: calc(100vh - 100px - 90px);
+  background-color: #FAFAFA;
+  padding: 46px 40px 0;
+}
+
+.type-space {
+  height: 90px;
+  background-color: #DDDDDD;
+  padding: 20px 40px;
+}

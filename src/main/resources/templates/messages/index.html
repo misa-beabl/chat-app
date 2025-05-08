@@ -8,8 +8,12 @@
 </head>
 <body>
   <div class="wrapper">
-    <div th:insert="~{side_bar :: side_bar}"></div>
-    <div th:insert="~{main_chat :: main_chat}"></div>
+    <div class="side-bar">
+        <div th:insert="~{side_bar :: side_bar}"></div>
+    </div>
+    <div class="main-chat">
+      <div th:insert="~{main_chat :: main_chat}"></div>
+    </div>
   </div>
 </body>
 </html>
