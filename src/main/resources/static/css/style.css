@@ -15,12 +15,41 @@
   height: 100px;
   background-color: #253141;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.username a {
+  font-size: 16px;
+  color: #FAFAFA;
+  text-decoration: none;
+}
+
+.create-chat {
+  font-size: 10px;
+  color: deepskyblue;
+  border: lightblue 1px solid;
+  text-align: center;
+  padding: 14px;
 }
 
 .rooms {
   background-color: #2f3e51;
   height: calc(100vh - 100px);
   padding: 0 20px;
+  overflow: scroll;
+}
+
+.roomnames {
+  padding: 20px 0 40px;
+}
+
+.roomname a {
+  text-decoration: none;
+  color: white;
+  
 }
 
 .main-chat {
