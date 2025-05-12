@@ -114,15 +114,7 @@ private final UserService userService;
       user.setNickname(userEditForm.getName());
       user.setEmail(userEditForm.getEmail());
 
-      try {
-        userRepository.updateUser(user);
-      } catch (Exception e) {
-        System.out.println("エラー：" + e);
-        model.addAttribute("user", userEditForm);
-        return "users/edit";
-      }
-      
-       if (result.hasErrors()) {
+      if (result.hasErrors()) {
       List<String> errorMessages = result.getAllErrors().stream()
               .map(DefaultMessageSourceResolvable::getDefaultMessage)
               .collect(Collectors.toList());
@@ -131,7 +123,14 @@ private final UserService userService;
       model.addAttribute("user", userEditForm);
       return "users/edit";
     }
-      
+
+      try {
+        userRepository.updateUser(user);
+      } catch (Exception e) {
+        System.out.println("エラー：" + e);
+        model.addAttribute("user", userEditForm);
+        return "users/edit";
+      }
       return "redirect:/";
   }
 }
