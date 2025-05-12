@@ -4,15 +4,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.chat_app.entity.UserEntity;
 import in.tech_camp.chat_app.form.LoginForm;
+import in.tech_camp.chat_app.form.UserEditForm;
 import in.tech_camp.chat_app.form.UserForm;
 import in.tech_camp.chat_app.repository.UserRepository;
 import in.tech_camp.chat_app.service.UserService;
 import lombok.AllArgsConstructor;
+
+
 
 
 
@@ -62,4 +66,38 @@ private final UserService userService;
     }
     return "users/login";
   }
+
+  @GetMapping("/users/{userId}/edit")
+  public String editUserForm(@PathVariable("userId") Integer userId, Model model) {
+      UserEntity user = userRepository.findById(userId);
+
+      System.out.println(userRepository.findById(userId));
+
+      UserEditForm editForm = new UserEditForm();
+      editForm.setId(user.getId());
+      editForm.setName(user.getNickname());
+      editForm.setEmail(user.getEmail());
+
+      model.addAttribute("user", editForm);
+      return "users/edit";
+  }
+
+  @PostMapping("/users/{userId}")
+  public String updateUser(@ModelAttribute("user") UserEditForm userEditForm, @PathVariable("userId") Integer userId, Model model) {
+
+      UserEntity user = userRepository.findById(userId);
+      user.setNickname(userEditForm.getName());
+      user.setEmail(userEditForm.getEmail());
+
+      try {
+        userRepository.updateUser(user);
+      } catch (Exception e) {
+        System.out.println("エラー：" + e);
+        model.addAttribute("user", userEditForm);
+        return "users/edit";
+      }      
+      
+      return "redirect:/";
+  }
+  
 }
