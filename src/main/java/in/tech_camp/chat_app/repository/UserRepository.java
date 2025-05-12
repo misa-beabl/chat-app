@@ -22,4 +22,10 @@ public interface UserRepository {
 
   @Update("UPDATE users SET nickname = #{nickname}, email = #{email} WHERE id = #{id}")
   void updateUser(UserEntity user);
+
+  @Select("SELECT EXISTS(SELECT 1 FROM users WHERE email = #{email})")
+  boolean existsByEmail(String email);
+
+  @Select("SELECT EXISTS(SELECT 1 FROM users WHERE email = #{email} AND id != #{id})")
+  boolean usedEmail(String email, int id);
 }

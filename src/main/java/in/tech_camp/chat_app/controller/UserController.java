@@ -1,7 +1,13 @@
 package in.tech_camp.chat_app.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +20,7 @@ import in.tech_camp.chat_app.form.UserEditForm;
 import in.tech_camp.chat_app.form.UserForm;
 import in.tech_camp.chat_app.repository.UserRepository;
 import in.tech_camp.chat_app.service.UserService;
+import in.tech_camp.chat_app.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 
@@ -37,7 +44,22 @@ private final UserService userService;
   }
 
   @PostMapping("/user")
-  public String createUser(@ModelAttribute("userForm") UserForm userForm, Model model) {
+  public String createUser(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
+      userForm.validatePasswordConfirmation(result);
+      if (userRepository.existsByEmail(userForm.getEmail())) {
+      result.rejectValue("email", "null", "Email already exists");
+    }
+
+    if (result.hasErrors()) {
+      List<String> errorMessages = result.getAllErrors().stream()
+              .map(DefaultMessageSourceResolvable::getDefaultMessage)
+              .collect(Collectors.toList());
+
+      model.addAttribute("errorMessages", errorMessages);
+      model.addAttribute("userForm", userForm);
+      return "users/signUp";
+    }
+
       UserEntity userEntity = new UserEntity();
       userEntity.setNickname(userForm.getNickname());
       userEntity.setEmail(userForm.getEmail());
@@ -70,9 +92,7 @@ private final UserService userService;
 
   @GetMapping("/users/{userId}/edit")
   public String editUserForm(@PathVariable("userId") Integer userId, Model model) {
-      UserEntity user = userRepository.findById(userId);
-
-      System.out.println(userRepository.findById(userId));
+    UserEntity user = userRepository.findById(userId);
 
       UserEditForm editForm = new UserEditForm();
       editForm.setId(user.getId());
@@ -84,9 +104,13 @@ private final UserService userService;
   }
 
   @PostMapping("/users/{userId}")
-  public String updateUser(@ModelAttribute("user") UserEditForm userEditForm, @PathVariable("userId") Integer userId, Model model) {
+  public String updateUser(@ModelAttribute("user") @Validated(ValidationOrder.class) UserEditForm userEditForm, BindingResult result, @PathVariable("userId") Integer userId, Model model) {
 
       UserEntity user = userRepository.findById(userId);
+      if (userRepository.usedEmail(userEditForm.getEmail(), userEditForm.getId())) {
+      result.rejectValue("email", "null", "The email is already used");
+    }
+      
       user.setNickname(userEditForm.getName());
       user.setEmail(userEditForm.getEmail());
 
@@ -96,9 +120,18 @@ private final UserService userService;
         System.out.println("エラー：" + e);
         model.addAttribute("user", userEditForm);
         return "users/edit";
-      }      
+      }
+      
+       if (result.hasErrors()) {
+      List<String> errorMessages = result.getAllErrors().stream()
+              .map(DefaultMessageSourceResolvable::getDefaultMessage)
+              .collect(Collectors.toList());
+
+      model.addAttribute("errorMessages", errorMessages);
+      model.addAttribute("user", userEditForm);
+      return "users/edit";
+    }
       
       return "redirect:/";
   }
-  
 }
