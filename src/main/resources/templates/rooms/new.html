@@ -30,6 +30,13 @@
           <label class='chat-room-form__label' for='chat_room_チャットメンバー'>チャットメンバー</label>
         </div>
         <div class='chat-room-form__field--right'>
+          <select th:field="*{memberIds}">
+            <option value="">チャットするユーザーを選択してください</option>
+            <div th:each="user : ${users}">
+              <option th:value="${user.id}" th:text="${user.nickname}"></option>
+            </div>
+          </select>
+          <input type="hidden" th:value="${#authentication?.principal.id}" th:name="memberIds" />
         </div>
       </div>
       <div class='chat-room-form__field'>

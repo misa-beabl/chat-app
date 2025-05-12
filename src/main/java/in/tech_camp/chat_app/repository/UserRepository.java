@@ -1,5 +1,7 @@
 package in.tech_camp.chat_app.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -28,4 +30,7 @@ public interface UserRepository {
 
   @Select("SELECT EXISTS(SELECT 1 FROM users WHERE email = #{email} AND id != #{id})")
   boolean usedEmail(String email, int id);
+
+  @Select("SELECT * FROM users WHERE id <> #{excludedId}")
+  List<UserEntity> findAllExcept(Integer excludedId);
 }
