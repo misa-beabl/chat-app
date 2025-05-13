@@ -22,12 +22,12 @@
       <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
     </div>
   </div>  
-  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="type-space">
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="type-space" enctype="multipart/form-data">
     <div class="type-form">
       <input th:field="*{content}" placeholder="type a message" class="type">
       <label class="form-image">
         <span class="image-file">画像</span>
-        <input type="file" class="hidden">
+        <input type="file" th:field="*{image}" class="hidden">
       </label> 
     </div> 
     <input type="submit" value="送信" class="send">
