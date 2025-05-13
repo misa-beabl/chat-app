@@ -12,20 +12,13 @@
     </div>
   </div>
   <div class="display-screen">
-    <div class="post-box">
+    <div th:each="message: ${message}" class="post-box">
       <div class="user-info">
-        <div class="name">Tom</div>
-        <div class="date">2025/5/09(Fri) 12:43:30</div>
+        <div th:text="${message.user.nickname}" class="name">ユーザー名</div>
+        <div th:text="${message.createdAt}" class="date">日付</div>
       </div>
-      <div class="post-contents">good morning</div>
+      <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
     </div>
-    <div class="post-box">
-      <div class="user-info">
-        <div class="name">Sam</div>
-        <div class="date">2024/12/4(Wed) 14:15:05</div>
-      </div>
-      <div class="post-contents">treat yourself like the someone you love</div>
-    </div>  
   </div>  
   <form th:action="@{/rooms/{roomId}/messages(roomId=${roomId})}" method="post" th:object="${messageForm}" class="type-space">
     <div class="type-form">

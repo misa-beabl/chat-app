@@ -38,6 +38,7 @@ public class MessageController {
   public String showMessages(@PathVariable("roomId") Integer roomId, @AuthenticationPrincipal CustomUserDetail currentUser, Model model){
     UserEntity user = userRepository.findById(currentUser.getId());
     model.addAttribute("user", user);
+    List<MessageEntity> message = messageRepository.showMessagesById(roomId);
     List<RoomUsersEntity> roomUserEntities = roomUsersRepository.showRoomsById(currentUser.getId());
     List<RoomEntity> roomList = roomUserEntities.stream()
         .map(RoomUsersEntity::getRoom)
@@ -45,6 +46,7 @@ public class MessageController {
     model.addAttribute("rooms", roomList);
     model.addAttribute("messageForm", new MessageForm());
     model.addAttribute("roomId", roomId);
+    model.addAttribute("message", message);
       return "messages/index";
   } 
 
