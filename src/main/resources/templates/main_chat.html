@@ -20,6 +20,9 @@
         <div th:text="${#dates.format(message.createdAt, 'yyyy/MM/dd HH:mm:ss')}" class="date">日付</div>
       </div>
       <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
+      <div th:if="${message.image}">
+        <img th:src="@{${message.image}}" alt="メッセージ画像" style="width: 500px; height: 500px;"/>
+      </div>
     </div>
   </div>  
   <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="type-space" enctype="multipart/form-data">
