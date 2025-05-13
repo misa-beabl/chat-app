@@ -3,7 +3,7 @@
 <div th:fragment="main_chat">
   <div class="title-bar">
     <div class="title-left">
-      <div class="title">hogefuga</div>
+      <div th:text="${room.name}" class="title">チャットルーム名</div>
     </div>
     <div class="title-right">
       <div class="close-chat">
@@ -20,7 +20,7 @@
       <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
     </div>
   </div>  
-  <form th:action="@{/rooms/{roomId}/messages(roomId=${roomId})}" method="post" th:object="${messageForm}" class="type-space">
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="type-space">
     <div class="type-form">
       <input th:field="*{content}" placeholder="type a message" class="type">
       <label class="form-image">

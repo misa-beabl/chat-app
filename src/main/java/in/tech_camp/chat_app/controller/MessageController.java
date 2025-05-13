@@ -43,9 +43,13 @@ public class MessageController {
     List<RoomEntity> roomList = roomUserEntities.stream()
         .map(RoomUsersEntity::getRoom)
         .collect(Collectors.toList());
+
     model.addAttribute("rooms", roomList);
     model.addAttribute("messageForm", new MessageForm());
-    model.addAttribute("roomId", roomId);
+
+    RoomEntity room = roomRepository.findRoomsById(roomId);
+    model.addAttribute("room", room);
+
     model.addAttribute("message", message);
       return "messages/index";
   } 
