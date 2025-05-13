@@ -24,6 +24,7 @@ import in.tech_camp.chat_app.repository.UserRepository;
 import in.tech_camp.chat_app.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
+
 @Controller
 @AllArgsConstructor
 public class RoomController {
@@ -84,5 +85,5 @@ public class RoomController {
       }
     }
     return "redirect:/";
-  }
+  }  
 }
