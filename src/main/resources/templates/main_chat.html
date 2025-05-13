@@ -27,15 +27,15 @@
       <div class="post-contents">treat yourself like the someone you love</div>
     </div>  
   </div>  
-  <div class="type-space">
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${roomId})}" method="post" th:object="${messageForm}" class="type-space">
     <div class="type-form">
-      <input placeholder="type a message" class="type">
+      <input th:field="*{content}" placeholder="type a message" class="type">
       <label class="form-image">
         <span class="image-file">画像</span>
         <input type="file" class="hidden">
       </label> 
     </div> 
     <input type="submit" value="送信" class="send">
-  </div>
+  </form>
 </div>
 </html>

@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class MessageEntity {
   private int id;
-  private Long content;
-  private Long image;
+  private String content;
+  private String image;
   private Timestamp createdAt;
   private UserEntity user;
   private RoomEntity room;
