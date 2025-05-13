@@ -15,7 +15,7 @@
     <div th:each="message: ${message}" class="post-box">
       <div class="user-info">
         <div th:text="${message.user.nickname}" class="name">ユーザー名</div>
-        <div th:text="${message.createdAt}" class="date">日付</div>
+        <div th:text="${#dates.format(message.createdAt, 'yyyy/MM/dd HH:mm:ss')}" class="date">日付</div>
       </div>
       <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
     </div>
