@@ -64,7 +64,7 @@
 }
 
 .close-chat {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .title {
@@ -73,11 +73,13 @@
   padding-top: 36px;
 }
 
-.close-chat a {
-  color: darkred;
-  border: darkred 1px solid;
+.close-chat input[type="submit"] {
   text-decoration: none;
+  border: 1px solid darkred;
+  color: darkred;
+  background-color: #fff;
   padding: 20px;
+  cursor: pointer;
 }
 
 

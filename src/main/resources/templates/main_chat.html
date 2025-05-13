@@ -3,39 +3,34 @@
 <div th:fragment="main_chat">
   <div class="title-bar">
     <div class="title-left">
-      <div class="title">hogefuga</div>
+      <div th:text="${room.name}" class="title">チャットルーム名</div>
     </div>
     <div class="title-right">
       <div class="close-chat">
-        <a href="#">チャットを終了する</a>
+        <form th:action="@{/rooms/{roomId}/delete(roomId=${room.id})}" method="post">
+          <input type="submit" value="チャットを終了する"/>
+        </form>
       </div>
     </div>
   </div>
   <div class="display-screen">
-    <div class="post-box">
+    <div th:each="message: ${message}" class="post-box">
       <div class="user-info">
-        <div class="name">Tom</div>
-        <div class="date">2025/5/09(Fri) 12:43:30</div>
+        <div th:text="${message.user.nickname}" class="name">ユーザー名</div>
+        <div th:text="${#dates.format(message.createdAt, 'yyyy/MM/dd HH:mm:ss')}" class="date">日付</div>
       </div>
-      <div class="post-contents">good morning</div>
+      <div th:text="${message.content}" class="post-contents">メッセージ内容</div>
     </div>
-    <div class="post-box">
-      <div class="user-info">
-        <div class="name">Sam</div>
-        <div class="date">2024/12/4(Wed) 14:15:05</div>
-      </div>
-      <div class="post-contents">treat yourself like the someone you love</div>
-    </div>  
   </div>  
-  <div class="type-space">
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="type-space">
     <div class="type-form">
-      <input placeholder="type a message" class="type">
+      <input th:field="*{content}" placeholder="type a message" class="type">
       <label class="form-image">
         <span class="image-file">画像</span>
         <input type="file" class="hidden">
       </label> 
     </div> 
     <input type="submit" value="送信" class="send">
-  </div>
+  </form>
 </div>
 </html>
