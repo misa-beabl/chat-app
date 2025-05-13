@@ -25,6 +25,7 @@ import in.tech_camp.chat_app.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 
+
 @Controller
 @AllArgsConstructor
 public class RoomController {
@@ -86,4 +87,16 @@ public class RoomController {
     }
     return "redirect:/";
   }  
+
+  @GetMapping("/")
+  public String showRooms(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    UserEntity user = userRepository.findById(currentUser.getId());
+    model.addAttribute("user", user);
+    List<RoomUsersEntity> roomUserEntities = roomUsersRepository.showRoomsById(currentUser.getId());
+    List<RoomEntity> roomList = roomUserEntities.stream()
+        .map(RoomUsersEntity::getRoom)
+        .collect(Collectors.toList());
+    model.addAttribute("rooms", roomList);
+      return "rooms/index";
+  }
 }

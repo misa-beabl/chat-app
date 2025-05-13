@@ -24,7 +24,7 @@ public class MessageController {
 
   private final RoomUsersRepository roomUsersRepository;
 
-  @GetMapping("/")
+  @GetMapping("/message")
   public String showMessages(@AuthenticationPrincipal CustomUserDetail currentUser, Model model){
     UserEntity user = userRepository.findById(currentUser.getId());
     model.addAttribute("user", user);
