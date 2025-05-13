@@ -27,6 +27,7 @@ import in.tech_camp.chat_app.repository.UserRepository;
 import in.tech_camp.chat_app.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
+
 @Controller
 @AllArgsConstructor
 public class MessageController {
@@ -83,5 +84,11 @@ public class MessageController {
         System.out.println("エラー：" + e);
       }
         return "redirect:/rooms/" + roomId + "/messages";
+  }
+
+  @PostMapping("/rooms/{roomId}/delete")
+  public String deleteRoom(@PathVariable("roomId") Integer roomId) {
+      messageRepository.deleteById(roomId);
+      return "redirect:/";
   }
 }

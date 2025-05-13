@@ -7,7 +7,9 @@
     </div>
     <div class="title-right">
       <div class="close-chat">
-        <a href="#">チャットを終了する</a>
+        <form th:action="@{/rooms/{roomId}/delete(roomId=${room.id})}" method="post">
+          <input type="submit" value="チャットを終了する"/>
+        </form>
       </div>
     </div>
   </div>

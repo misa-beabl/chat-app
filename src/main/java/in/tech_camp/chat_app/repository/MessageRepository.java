@@ -2,6 +2,7 @@ package in.tech_camp.chat_app.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
@@ -25,4 +26,7 @@ public interface MessageRepository {
         one = @One(select="in.tech_camp.chat_app.repository.UserRepository.findById"))
   })
     List<MessageEntity> showMessagesById(Integer roomId);
+
+  @Delete("DELETE FROM rooms WHERE id = #{id}")
+  void deleteById(Integer id);
 }
