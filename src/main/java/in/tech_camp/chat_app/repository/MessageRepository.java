@@ -29,4 +29,7 @@ public interface MessageRepository {
 
   @Delete("DELETE FROM rooms WHERE id = #{id}")
   void deleteById(Integer id);
+
+  @Select("SELECT COUNT(*) FROM messages")
+  int count();
 }
